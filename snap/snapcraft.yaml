@@ -1,0 +1,38 @@
+name: error-buddy
+base: core22
+version: '1.8'
+title: Error Buddy
+summary: Error auditor and code locator for Canonical products.
+description: |
+  Audit rotated logs or map errors to source code.
+  - Audit logs: error-buddy ~/Downloads/sosreport/var/log/
+  - Supports: FATAL, CRITICAL, ERROR, WARNING, FAIL
+  - Deep Search: error-buddy <product> "connection refused"
+  - Supported Products: maas, landscape-server, landscape-client, lxd, juju, cloud-init, curtin, subiquity, microk8s, microstack, snapd, snapcraft, charmcraft, rockcraft, cos-lite, netplan, autoinstall
+
+  Created by Ryan Molkentin.
+
+contact: ryan.molkentin@canonical.com
+license: Apache-2.0
+grade: stable
+confinement: strict
+
+apps:
+  error-buddy:
+    command: bin/python3 $SNAP/eb.py
+    plugs:
+      - home
+      - removable-media
+
+parts:
+  error-buddy-script:
+    plugin: dump
+    source: .
+    stage:
+      - eb.py
+  
+  python-runtime:
+    plugin: python
+    source: .
+    stage-packages:
+      - python3-minimal
