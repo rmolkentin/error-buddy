@@ -1,8 +1,8 @@
 name: error-buddy
 base: core22
-version: '1.8'
+version: '1.9'
 title: Error Buddy
-summary: Error auditor and code locator for Canonical products.
+summary: Friendly error auditor and code locator for Canonical products.
 description: |
   Audit rotated logs or map errors to source code.
   - Audit logs: error-buddy ~/Downloads/sosreport/var/log/
@@ -23,6 +23,8 @@ apps:
     plugs:
       - home
       - removable-media
+      - dot-error-buddy
+      - network
 
 parts:
   error-buddy-script:
@@ -36,3 +38,9 @@ parts:
     source: .
     stage-packages:
       - python3-minimal
+
+plugs:
+  dot-error-buddy:
+    interface: personal-files
+    write:
+      - $HOME/.error-buddy
